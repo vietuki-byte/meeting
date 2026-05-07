@@ -10,7 +10,6 @@
   <title>議事録メーカー</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
       --bg: #f7f6f3;
       --surface: #ffffff;
@@ -24,13 +23,11 @@
       --red: #c0392b;
       --red-bg: #fdf0ef;
       --green: #1d6a45;
-      --green-bg: #edf7f2;
       --amber: #8a5c00;
       --amber-bg: #fdf6e3;
       --radius: 12px;
       --radius-sm: 8px;
     }
-
     body {
       font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', 'Noto Sans JP', sans-serif;
       background: var(--bg);
@@ -38,250 +35,37 @@
       min-height: 100vh;
       padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
     }
-
-    .app {
-      max-width: 480px;
-      margin: 0 auto;
-      padding: 1.25rem 1rem 2rem;
-    }
-
-    .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1.5rem;
-    }
-
-    .header-title { font-size: 17px; font-weight: 600; color: var(--text); }
+    .app { max-width: 480px; margin: 0 auto; padding: 1.25rem 1rem 2rem; }
+    .header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+    .header-title { font-size: 17px; font-weight: 600; }
     .header-sub { font-size: 12px; color: var(--text-sub); margin-top: 2px; }
-
-    .status-badge {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: var(--surface);
-      border: 0.5px solid var(--border);
-      border-radius: 20px;
-      padding: 4px 10px;
-    }
-    .status-dot {
-      width: 7px; height: 7px;
-      border-radius: 50%;
-      background: var(--border-mid);
-      transition: background 0.3s;
-    }
+    .status-badge { display: flex; align-items: center; gap: 6px; background: var(--surface); border: 0.5px solid var(--border); border-radius: 20px; padding: 4px 10px; }
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--border-mid); transition: background 0.3s; }
     .status-label { font-size: 12px; color: var(--text-sub); }
-
-    .card {
-      background: var(--surface);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1rem 1.125rem;
-      margin-bottom: 0.875rem;
-    }
-
-    .card-label {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-sub);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      margin-bottom: 0.625rem;
-    }
-
-    input[type="text"], textarea {
-      width: 100%;
-      background: var(--bg);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 0.625rem 0.75rem;
-      font-size: 14px;
-      color: var(--text);
-      font-family: inherit;
-      outline: none;
-      transition: border-color 0.2s;
-      -webkit-appearance: none;
-    }
-    input[type="text"]:focus, textarea:focus {
-      border-color: var(--border-mid);
-    }
+    .card { background: var(--surface); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 1rem 1.125rem; margin-bottom: 0.875rem; }
+    .card-label { font-size: 12px; font-weight: 600; color: var(--text-sub); letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 0.625rem; }
+    input[type="text"], textarea { width: 100%; background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-sm); padding: 0.625rem 0.75rem; font-size: 14px; color: var(--text); font-family: inherit; outline: none; transition: border-color 0.2s; -webkit-appearance: none; }
+    input[type="text"]:focus, textarea:focus { border-color: var(--border-mid); }
     textarea { resize: vertical; line-height: 1.6; }
     ::placeholder { color: var(--text-hint); }
-
-    .tab-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px;
-      margin-bottom: 0.875rem;
-    }
-
-    .tab-btn {
-      padding: 0.5rem;
-      font-size: 13px;
-      font-family: inherit;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: all 0.15s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-    }
-    .tab-btn.active {
-      background: var(--accent);
-      border: 0.5px solid var(--accent);
-      color: #fff;
-      font-weight: 600;
-    }
-    .tab-btn.inactive {
-      background: transparent;
-      border: 0.5px solid var(--border);
-      color: var(--text-sub);
-      font-weight: 400;
-    }
-
-    .rec-center { text-align: center; padding: 0.75rem 0; }
-
-    .rec-btn {
-      width: 76px; height: 76px;
-      border-radius: 50%;
-      border: 0.5px solid var(--border-mid);
-      background: var(--bg);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 0.75rem;
-      transition: all 0.2s;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .rec-btn svg { width: 28px; height: 28px; fill: var(--text); transition: fill 0.2s; }
-    .rec-btn.recording {
-      background: var(--red-bg);
-      border-color: var(--red);
-    }
+    .rec-center { text-align: center; padding: 1rem 0; }
+    .rec-btn { width: 80px; height: 80px; border-radius: 50%; border: 0.5px solid var(--border-mid); background: var(--bg); cursor: pointer; display: flex; align-items: center; justify-content: center; margin: 0 auto 0.875rem; transition: all 0.2s; -webkit-tap-highlight-color: transparent; }
+    .rec-btn svg { width: 30px; height: 30px; fill: var(--text); transition: fill 0.2s; }
+    .rec-btn.recording { background: var(--red-bg); border-color: var(--red); box-shadow: 0 0 0 6px rgba(192,57,43,0.08); }
     .rec-btn.recording svg { fill: var(--red); }
-
-    .rec-timer {
-      font-size: 26px;
-      font-weight: 600;
-      color: var(--text);
-      font-variant-numeric: tabular-nums;
-      letter-spacing: 0.02em;
-    }
-    .rec-hint { font-size: 13px; color: var(--text-sub); margin-top: 4px; }
-
-    .upload-area {
-      border: 0.5px dashed var(--border-mid);
-      border-radius: var(--radius-sm);
-      padding: 1.5rem 1rem;
-      text-align: center;
-      cursor: pointer;
-      color: var(--text-sub);
-      font-size: 14px;
-      transition: border-color 0.2s;
-    }
-    .upload-area:hover { border-color: var(--text-sub); }
-    .upload-icon { font-size: 28px; margin-bottom: 6px; }
-    .file-hint { font-size: 12px; color: var(--text-hint); margin-top: 4px; }
-    .file-name { font-size: 13px; color: var(--green); text-align: center; margin-top: 6px; }
-
-    .transcript-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 0.5rem;
-    }
-    .clear-btn {
-      font-size: 12px;
-      color: var(--text-sub);
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      padding: 2px 4px;
-      font-family: inherit;
-    }
-    .clear-btn:hover { color: var(--red); }
-
-    .transcript-area {
-      min-height: 90px;
-    }
-
-    .step-card {
-      background: var(--accent-bg);
-      border: 0.5px solid var(--border);
-      border-radius: var(--radius);
-      padding: 1rem 1.125rem;
-      margin-bottom: 0.875rem;
-    }
-    .step-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 0.5rem;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .step-desc {
-      font-size: 13px;
-      color: var(--text-sub);
-      line-height: 1.7;
-      margin-bottom: 0.875rem;
-    }
-
-    .primary-btn {
-      width: 100%;
-      padding: 0.875rem;
-      font-size: 15px;
-      font-weight: 600;
-      font-family: inherit;
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      background: var(--accent);
-      border: none;
-      color: #fff;
-      transition: opacity 0.15s, transform 0.1s;
-      -webkit-tap-highlight-color: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
+    .rec-timer { font-size: 28px; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+    .rec-hint { font-size: 13px; color: var(--text-sub); margin-top: 6px; }
+    .transcript-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem; }
+    .clear-btn { font-size: 12px; color: var(--text-sub); background: transparent; border: none; cursor: pointer; padding: 2px 4px; font-family: inherit; }
+    .step-card { background: var(--accent-bg); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 1rem 1.125rem; margin-bottom: 0.875rem; }
+    .step-title { font-size: 13px; font-weight: 600; margin-bottom: 0.5rem; }
+    .step-desc { font-size: 13px; color: var(--text-sub); line-height: 1.7; margin-bottom: 0.875rem; }
+    .primary-btn { width: 100%; padding: 0.875rem; font-size: 15px; font-weight: 600; font-family: inherit; border-radius: var(--radius-sm); cursor: pointer; background: var(--accent); border: none; color: #fff; transition: opacity 0.15s, transform 0.1s; -webkit-tap-highlight-color: transparent; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .primary-btn:active { opacity: 0.85; transform: scale(0.98); }
     .primary-btn svg { width: 18px; height: 18px; fill: #fff; }
-
-    .copy-ok {
-      display: none;
-      font-size: 13px;
-      color: var(--green);
-      text-align: center;
-      margin-top: 0.5rem;
-      font-weight: 500;
-    }
-
-    .error-box {
-      display: none;
-      background: var(--red-bg);
-      border: 0.5px solid #e8b4b0;
-      border-radius: var(--radius-sm);
-      padding: 0.75rem 1rem;
-      margin-bottom: 0.875rem;
-      font-size: 13px;
-      color: var(--red);
-      line-height: 1.5;
-    }
-
-    .info-box {
-      background: var(--amber-bg);
-      border: 0.5px solid #e8d4a0;
-      border-radius: var(--radius-sm);
-      padding: 0.625rem 0.875rem;
-      font-size: 12px;
-      color: var(--amber);
-      line-height: 1.6;
-      margin-bottom: 0.875rem;
-    }
+    .copy-ok { display: none; font-size: 13px; color: var(--green); text-align: center; margin-top: 0.5rem; font-weight: 500; }
+    .error-box { display: none; background: var(--red-bg); border: 0.5px solid #e8b4b0; border-radius: var(--radius-sm); padding: 0.75rem 1rem; margin-bottom: 0.875rem; font-size: 13px; color: var(--red); line-height: 1.5; }
+    .info-box { background: var(--amber-bg); border: 0.5px solid #e8d4a0; border-radius: var(--radius-sm); padding: 0.625rem 0.875rem; font-size: 12px; color: var(--amber); line-height: 1.6; margin-bottom: 0.875rem; }
   </style>
 </head>
 <body>
@@ -298,6 +82,10 @@
     </div>
   </div>
 
+  <div class="info-box" id="browser-warn" style="display:none;">
+    ⚠️ Safari では音声認識が動作しない場合があります。iPhone の場合は Chrome アプリをお試しください。
+  </div>
+
   <div class="card">
     <div class="card-label">会議情報（任意）</div>
     <input type="text" id="meeting-title" placeholder="会議名　例：5月定例会議" style="margin-bottom:0.5rem;">
@@ -305,41 +93,16 @@
   </div>
 
   <div class="card">
-    <div class="card-label">録音方法</div>
-    <div class="tab-row">
-      <button class="tab-btn active" id="tab-live" onclick="switchTab('live')">
-        <svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:currentColor;"><path d="M12 1a4 4 0 0 1 4 4v7a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm6.5 10a1 1 0 0 1 1 1 7.5 7.5 0 0 1-15 0 1 1 0 0 1 2 0 5.5 5.5 0 0 0 11 0 1 1 0 0 1 1-1zM12 20a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1z"/></svg>
-        リアルタイム
+    <div class="card-label">録音</div>
+    <div class="rec-center">
+      <button class="rec-btn" id="rec-btn" onclick="toggleRecording()" aria-label="録音開始・停止">
+        <svg id="rec-icon" viewBox="0 0 24 24">
+          <path d="M12 1a4 4 0 0 1 4 4v7a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm6.5 10a1 1 0 0 1 1 1 7.5 7.5 0 0 1-15 0 1 1 0 0 1 2 0 5.5 5.5 0 0 0 11 0 1 1 0 0 1 1-1zM12 20a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1z"/>
+        </svg>
       </button>
-      <button class="tab-btn inactive" id="tab-upload" onclick="switchTab('upload')">
-        <svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:currentColor;"><path d="M11 14.586V3a1 1 0 0 1 2 0v11.586l3.293-3.293a1 1 0 0 1 1.414 1.414l-5 5a1 1 0 0 1-1.414 0l-5-5a1 1 0 0 1 1.414-1.414L11 14.586zM3 20h18a1 1 0 0 1 0 2H3a1 1 0 0 1 0-2z"/></svg>
-        ファイル
-      </button>
+      <div class="rec-timer" id="rec-timer">0:00</div>
+      <div class="rec-hint" id="rec-hint">タップして録音開始</div>
     </div>
-
-    <div id="panel-live">
-      <div class="rec-center">
-        <button class="rec-btn" id="rec-btn" onclick="toggleRecording()" aria-label="録音開始・停止">
-          <svg id="rec-icon" viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 1 4 4v7a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm6.5 10a1 1 0 0 1 1 1 7.5 7.5 0 0 1-15 0 1 1 0 0 1 2 0 5.5 5.5 0 0 0 11 0 1 1 0 0 1 1-1zM12 20a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1z"/></svg>
-        </button>
-        <div class="rec-timer" id="rec-timer">0:00</div>
-        <div class="rec-hint" id="rec-hint">タップして録音開始</div>
-      </div>
-    </div>
-
-    <div id="panel-upload" style="display:none;">
-      <label class="upload-area">
-        <div class="upload-icon">🎵</div>
-        音声ファイルを選択
-        <div class="file-hint">m4a・mp3・wav に対応</div>
-        <input type="file" id="audio-file" accept="audio/*" onchange="handleFileUpload()" style="display:none;">
-      </label>
-      <div class="file-name" id="file-name"></div>
-    </div>
-  </div>
-
-  <div class="info-box" id="browser-warn" style="display:none;">
-    ⚠️ Safari では音声認識が動作しない場合があります。Chrome をお試しください。または文字起こしボックスに直接テキストを貼り付けてください。
   </div>
 
   <div class="card">
@@ -347,15 +110,12 @@
       <div class="card-label" style="margin-bottom:0;">文字起こし</div>
       <button class="clear-btn" onclick="clearAll()">クリア</button>
     </div>
-    <textarea id="transcript-box" class="transcript-area" rows="6" placeholder="ここに文字起こしが表示されます。直接編集もできます。"></textarea>
+    <textarea id="transcript-box" rows="7" placeholder="ここに文字起こしが表示されます。直接編集もできます。"></textarea>
   </div>
 
   <div class="step-card">
-    <div class="step-title">
-      <svg viewBox="0 0 24 24" style="width:15px;height:15px;fill:var(--text);"><path d="M12 2a10 10 0 1 1 0 20A10 10 0 0 1 12 2zm0 2a8 8 0 1 0 0 16A8 8 0 0 0 12 4zm0 3a1 1 0 0 1 1 1v4.586l2.707 2.707a1 1 0 0 1-1.414 1.414l-3-3A1 1 0 0 1 11 13V8a1 1 0 0 1 1-1z"/></svg>
-      次のステップ
-    </div>
-    <div class="step-desc">文字起こしが完成したら「Claudeに送るテキストをコピー」を押してください。このチャットに貼り付けるだけで議事録を自動でまとめてくれます。</div>
+    <div class="step-title">📋 次のステップ</div>
+    <div class="step-desc">録音が終わったら「Claudeに送るテキストをコピー」を押してください。このチャットに貼り付けるだけで議事録を自動でまとめてくれます。</div>
     <button class="primary-btn" onclick="copyForClaude()">
       <svg viewBox="0 0 24 24"><path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2zm0 16H8V7h11v14z"/></svg>
       Claudeに送るテキストをコピー
@@ -366,33 +126,15 @@
   <div class="error-box" id="error-box"></div>
 
 </div>
-
 <script>
 let recognition = null;
 let isRecording = false;
 let timerInterval = null;
 let seconds = 0;
-let currentTab = 'live';
 let finalText = '';
 
-function checkBrowser() {
-  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-  if (isSafari) document.getElementById('browser-warn').style.display = 'block';
-}
-checkBrowser();
-
-function switchTab(tab) {
-  currentTab = tab;
-  document.getElementById('panel-live').style.display = tab === 'live' ? 'block' : 'none';
-  document.getElementById('panel-upload').style.display = tab === 'upload' ? 'block' : 'none';
-  const live = document.getElementById('tab-live');
-  const up = document.getElementById('tab-upload');
-  if (tab === 'live') {
-    live.className = 'tab-btn active'; up.className = 'tab-btn inactive';
-  } else {
-    up.className = 'tab-btn active'; live.className = 'tab-btn inactive';
-  }
-}
+const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+if (isSafari) document.getElementById('browser-warn').style.display = 'block';
 
 function setStatus(label, color) {
   document.getElementById('status-dot').style.background = color;
@@ -412,7 +154,7 @@ function toggleRecording() {
 
 function startRecording() {
   if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-    showError('このブラウザは音声認識に対応していません。Chrome をお使いいただくか、テキストを直接貼り付けてください。');
+    showError('このブラウザは音声認識に対応していません。Chrome アプリをお試しください。');
     return;
   }
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -455,11 +197,9 @@ function stopRecording() {
   isRecording = false;
   if (recognition) { recognition.onend = null; recognition.stop(); }
   clearInterval(timerInterval);
-
   document.getElementById('rec-btn').classList.remove('recording');
   document.getElementById('rec-icon').innerHTML = '<path d="M12 1a4 4 0 0 1 4 4v7a4 4 0 0 1-8 0V5a4 4 0 0 1 4-4zm6.5 10a1 1 0 0 1 1 1 7.5 7.5 0 0 1-15 0 1 1 0 0 1 2 0 5.5 5.5 0 0 0 11 0 1 1 0 0 1 1-1zM12 20a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1z"/>';
   document.getElementById('rec-hint').textContent = 'タップして録音開始';
-
   const box = document.getElementById('transcript-box');
   box.value = box.value.replace(/ \[.*?\]/g, '');
   finalText = box.value;
@@ -470,63 +210,21 @@ function clearAll() {
   if (isRecording) stopRecording();
   finalText = '';
   document.getElementById('transcript-box').value = '';
-  document.getElementById('file-name').textContent = '';
   document.getElementById('rec-timer').textContent = '0:00';
   seconds = 0;
   setStatus('待機中', '#ccc9c0');
-}
-
-function handleFileUpload() {
-  const file = document.getElementById('audio-file').files[0];
-  if (!file) return;
-  document.getElementById('file-name').textContent = '✓ ' + file.name;
-  setStatus('処理中...', '#8a5c00');
-
-  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-    showError('音声認識は Chrome 系ブラウザのみ対応です。テキストを直接貼り付けてください。');
-    setStatus('待機中', '#ccc9c0');
-    return;
-  }
-
-  const url = URL.createObjectURL(file);
-  const audio = new Audio(url);
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  const rec = new SR();
-  rec.lang = 'ja-JP';
-  rec.interimResults = false;
-  rec.continuous = true;
-  let result = '';
-
-  rec.onresult = (e) => {
-    for (let i = e.resultIndex; i < e.results.length; i++) {
-      if (e.results[i].isFinal) result += e.results[i][0].transcript;
-    }
-    document.getElementById('transcript-box').value = result;
-    finalText = result;
-  };
-  rec.onerror = () => {
-    showError('ファイルからの文字起こしに失敗しました。テキストを直接貼り付けてください。');
-    setStatus('待機中', '#ccc9c0');
-  };
-  rec.onend = () => { setStatus('文字起こし完了', '#1d6a45'); };
-  rec.start();
-  audio.play().catch(() => {});
-  audio.onended = () => rec.stop();
 }
 
 function copyForClaude() {
   const transcript = document.getElementById('transcript-box').value.trim();
   const title = document.getElementById('meeting-title').value.trim();
   const memo = document.getElementById('memo-input').value.trim();
-
   if (!transcript) { showError('文字起こしのテキストがありません。'); return; }
-
   let text = '以下の会議の文字起こしを議事録にまとめてください。\n\n';
   if (title) text += '【会議名】' + title + '\n';
   if (memo)  text += '【補足】'  + memo  + '\n';
   text += '\n【文字起こし】\n' + transcript;
   text += '\n\n---\n決定事項・議論内容・TODO（担当者と期限）・次回の議題の順でまとめてください。';
-
   navigator.clipboard.writeText(text).then(() => {
     const ok = document.getElementById('copy-ok');
     ok.style.display = 'block';
